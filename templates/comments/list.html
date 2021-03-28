@@ -1,0 +1,71 @@
+{% load staticfiles comments %}
+<div class="card card-block">
+    {% render_comment_form for post %}
+</div>
+<div class="card card-block">
+    {% get_comment_count for post as comment_count %}
+    <h3 class="card-title font-weight-bold">评论列表
+        <small>({{ comment_count }})</small>
+    </h3>
+    <hr>
+    {% if comment_count %}
+        <ul class="media-list">
+            {% for root_comment in post.root_comments %}
+                <li class="media" id="c{{ root_comment.pk }}">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" src="{% static 'images/default_avatar.jpg' %}"
+                                 alt="Generic placeholder image"
+                                 style="width: 34px">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <ul class="list-inline comment-meta">
+                            <li class="list-inline-item">
+                                <span class="media-heading font-weight-bold">{{ root_comment.name }}</span>
+                            </li>
+                            <li class="list-inline-item">
+                                <time class="text-muted">{{ root_comment.submit_date |timesince }}前</time>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="{% url 'comments:reply' root_comment.pk %}">回复</a>
+                            </li>
+                        </ul>
+                        <div class="card-text">{{ root_comment.comment_html }}</div>
+
+                        <!-- Nested media object -->
+                        {% for desc_comment in root_comment.get_descendants_by_time %}
+                            <div class="media" id="c{{ desc_comment.pk }}">
+                                <a class="media-left" href="#">
+                                    <img class="media-object" src="{% static 'images/default_avatar.jpg' %}"
+                                         alt="Generic placeholder image"
+                                         style="width: 34px">
+                                </a>
+                                <div class="media-body">
+                                    <ul class="list-inline comment-meta">
+                                        <li class="list-inline-item">
+                                            <span class="media-heading font-weight-bold">{{ desc_comment.name }}</span>
+                                            <i class="fa fa-share" aria-hidden="true"></i>
+                                            <span class="media-heading font-weight-bold">{{ desc_comment.parent.name }}</span>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <time class="text-muted">{{ desc_comment.submit_date |timesince }}前</time>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="{% url 'comments:reply' desc_comment.pk %}">回复</a>
+                                        </li>
+                                    </ul>
+                                    <div class="card-text">{{ desc_comment.comment_html }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </li>
+                <br>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div>暂无评论</div>
+    {% endif %}
+
+</div>

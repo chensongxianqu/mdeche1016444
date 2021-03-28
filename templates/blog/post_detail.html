@@ -1,0 +1,28 @@
+{% extends 'blog/_post_detail.html' %}
+{% block breadcrumb %}
+    <ol class="breadcrumb" style="background-color: #fff">
+        <li class="breadcrumb-item"><a href="{% url 'blog:index' %}">博客</a></li>
+        <li class="breadcrumb-item active">{{ post.title }}</li>
+    </ol>
+{% endblock %}
+{% block post_content %}
+    {% block post_title %}
+        <h2 class="media-heading font-weight-bold">{{ post.title }}</h2>
+    {% endblock post_title %}
+    {% block post_meta %}
+        {{ block.super }}
+    {% endblock %}
+    {% block post_body %}
+        <div class="card-text post-body">
+            {% if post.lead %}
+                <blockquote style="margin-left: 0">
+                    {{ post.lead_html }}
+                </blockquote>
+            {% endif %}
+            {{ post.body_html }}
+        </div>
+    {% endblock post_body %}
+
+    {% block continue_reading %}
+    {% endblock continue_reading %}
+{% endblock %}

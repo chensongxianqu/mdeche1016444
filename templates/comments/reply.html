@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load staticfiles comments crispy_forms_tags %}
+{% block main %}
+    <div class="col-md-8">
+        <h4 class="m-b-1 alert mark">回复<span class="font-weight-bold"> {{ mycomment.name }} </span>的评论：</h4>
+        <div class="card card-block">
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="{% static 'images/default_avatar.jpg' %}"
+                             alt="Generic placeholder image"
+                             style="width: 34px">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <ul class="list-inline comment-meta">
+                        <li class="list-inline-item">
+                            <span class="media-heading font-weight-bold">{{ mycomment.name }}</span>
+                        </li>
+                        <li class="list-inline-item">
+                            <time class="text-muted">{{ mycomment.submit_date |timesince }}前</time>
+                        </li>
+                    </ul>
+                    <p class="card-text">{{ mycomment.comment_html }}</p>
+                    <hr>
+                    {% crispy form %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}

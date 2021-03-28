@@ -1,0 +1,9 @@
+{% load comments bootstrap_pagination %}
+{% for post in post_list %}
+    {% include 'blog/_post_detail.html' %}
+{% empty %}
+    暂无文章
+{% endfor %}
+{% if post_list %}
+    {% bootstrap_paginate page_obj range=10 show_first_last='true' size='small' %}
+{% endif %}

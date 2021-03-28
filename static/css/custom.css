@@ -1,0 +1,70 @@
+body {
+    background-color: #f1f2f3;
+}
+
+/* 代码片断 */
+pre, code, pre tt {
+    font-family: Courier, 'Courier New', monospace;
+}
+
+pre {
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 1em 1.5em;
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 块/段落引用 */
+blockquote {
+    position: relative;
+    color: #999;
+    font-weight: 400;
+    border-left: 3px solid #1abc9c;
+    padding-left: 1em;
+    margin: 1em 3em 1em 2em;
+}
+
+@media only screen and ( max-width: 640px ) {
+    blockquote {
+        margin: 1em 0;
+    }
+}
+
+.post-meta {
+    font-size: 14px;
+    margin: 8px 0 16px 0;
+}
+
+.post-meta a {
+    color: #818a91;
+}
+
+.post-meta li {
+    margin: 0 !important;
+}
+
+.post-meta .meta-category:after, .meta-author:after, .meta-date:after, .meta-comment:after {
+    content: '·';
+}
+
+.comment-meta {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.comment-meta li {
+    margin: 0 !important;
+}
+
+.comment-meta li:not(:last-child):after {
+    content: '·';
+}
+
+#div_id_honeypot {
+    display: none;
+}
+
+.asteriskField {
+    color: red;
+}
