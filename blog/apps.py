@@ -8,4 +8,3 @@ class BlogConfig(AppConfig):
         from django_comments.moderation import moderator
         from comments.moderation import CommentModerator
         moderator.register(self.get_model('Post'), CommentModerator)
-        print(moderator._registry)

@@ -19,7 +19,13 @@
                             </a>
                         </li>
                         <li class="list-inline-item meta-author">
-                            <span class="card-text">{{ post.author.name }}</span>
+                            <span class="card-text">
+                                {% if post.author.name %}
+                                    {{ post.author.name }}
+                                {% else %}
+                                    {{ post.author.username }}
+                                {% endif %}
+                            </span>
                         </li>
                         <li class="list-inline-item meta-date">
                             <time class="card-text">{{ post.pub_date |date }}</time>
@@ -54,7 +60,7 @@
             {% if post.cover %}
                 <div class="media-right">
                     <a href="{{ post.get_absolute_url }}">
-                        <img class="media-object" src="{{ post.cover_thumbnail.url }}"
+                        <img class="media-object" src="{{ post.cover.cover_thumbnail.url }}"
                              alt="Sorry, picture can't display">
                     </a>
                 </div>
