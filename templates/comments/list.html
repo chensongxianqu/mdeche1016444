@@ -2,7 +2,7 @@
 <div class="card card-block">
     {% render_comment_form for post %}
 </div>
-<div class="card card-block">
+<div class="card card-block" id="comment-panel">
     {% get_comment_count for post as comment_count %}
     <h3 class="card-title font-weight-bold">评论列表
         <small>({{ comment_count }})</small>
@@ -25,7 +25,9 @@
                                 <span class="media-heading font-weight-bold">{{ root_comment.name }}</span>
                             </li>
                             <li class="list-inline-item">
-                                <time class="text-muted">{{ root_comment.submit_date |timesince }}前</time>
+                                <time class="text-muted"
+                                      title="{{ root_comment.submit_date }}">{{ root_comment.submit_date |timesince }}前
+                                </time>
                             </li>
                             <li class="list-inline-item">
                                 <a href="{% url 'comments:reply' root_comment.pk %}">回复</a>
@@ -49,7 +51,9 @@
                                             <span class="media-heading font-weight-bold">{{ desc_comment.parent.name }}</span>
                                         </li>
                                         <li class="list-inline-item">
-                                            <time class="text-muted">{{ desc_comment.submit_date |timesince }}前</time>
+                                            <time class="text-muted"
+                                                  title="{{ desc_comment.submit_date }}">{{ desc_comment.submit_date |timesince }}前
+                                            </time>
                                         </li>
                                         <li class="list-inline-item">
                                             <a href="{% url 'comments:reply' desc_comment.pk %}">回复</a>
@@ -67,5 +71,4 @@
     {% else %}
         <div>暂无评论</div>
     {% endif %}
-
 </div>

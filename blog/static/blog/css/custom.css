@@ -31,6 +31,10 @@ blockquote {
     }
 }
 
+.post-body img {
+    max-width: 100%;
+}
+
 .post-meta {
     font-size: 14px;
     margin: 8px 0 16px 0;

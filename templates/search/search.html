@@ -1,76 +1,10 @@
 {% extends 'base.html' %}
-{% load staticfiles comments bootstrap_pagination %}
-
+{% load comments bootstrap_pagination %}
 {% block main %}
     <main class="col-md-8">
-        {#        {% if messages %}#}
-        {#            {% for message in messages %}#}
-        {#                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>#}
-        {#            {% endfor %}#}
-        {#        {% endif %}#}
         {% if query %}
-            {% for result in object_list %}
-                <div class="card card-block">
-                    {% block post_content %}
-                        <div class="media">
-                            <div class="media-body">
-                                {% block post_title %}
-                                    <h3 class="media-heading font-weight-bold"><a
-                                            href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a>
-                                    </h3>
-                                {% endblock post_title %}
-                                {% block post_meta %}
-                                    <ul class="list-inline text-muted post-meta">
-                                        <li class="list-inline-item meta-category">
-                                            <a class="card-text"
-                                               href="{% url 'blog:in_category' result.object.category.slug %}">
-                                                {{ result.object.category.name }}
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item meta-author">
-                                            <span class="card-text">{{ result.object.author.name }}</span>
-                                        </li>
-                                        <li class="list-inline-item meta-date">
-                                            <time class="card-text">{{ result.object.pub_date |date }}</time>
-                                        </li>
-                                        <li class="list-inline-item meta-comment">
-                                            {% get_comment_count for result.object as comment_count %}
-                                            <a class="card-text" href="">评论 {{ comment_count }}</a>
-                                        </li>
-                                        <li class="list-inline-item meta-views">
-                                            <span class="card-text">阅读 {{ result.object.views }}</span>
-                                        </li>
-                                    </ul>
-                                {% endblock %}
-                                {% block post_body %}
-                                    <div class="card-text m-b-1">
-                                        {% if result.object.lead %}
-                                            {{ result.object.lead_html | truncatechars_html:200 }}
-                                        {% else %}
-                                            {{ result.object.excerpt_html | truncatechars_html:200 }}
-                                        {% endif %}
-                                    </div>
-                                {% endblock post_body %}
-
-                                {% block continue_reading %}
-                                    {% if result.object.body.has_more %}
-                                        <a class="btn btn-outline-primary btn-sm" role="button"
-                                           href="{{ result.object.get_absolute_url }}">继续阅读
-                                            >></a>
-                                    {% endif %}
-                                {% endblock continue_reading %}
-                            </div>
-                            {% if result.object.cover %}
-                                <div class="media-right">
-                                    <a href="{{ result.object.get_absolute_url }}">
-                                        <img class="media-object" src="{{ result.object.cover_thumbnail.url }}"
-                                             alt="Sorry, picture can't display">
-                                    </a>
-                                </div>
-                            {% endif %}
-                        </div>
-                    {% endblock %}
-                </div>
+            {% for obj in object_list %}
+                {% include 'blog/_post_detail.html' with post=obj.object %}
             {% empty %}
                 <p>没有搜到任何文章，请尝试更换搜索关键字。</p>
             {% endfor %}
@@ -78,8 +12,7 @@
                 {% bootstrap_paginate page_obj range=10 show_first_last='true' size='small' %}
             {% endif %}
         {% else %}
-            {# Show some example queries to run, maybe query syntax, something else? #}
             你要搜什么？
         {% endif %}
-    </main><!--col-md-8-->
+    </main>
 {% endblock main %}

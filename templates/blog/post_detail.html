@@ -1,7 +1,7 @@
 {% extends 'blog/_post_detail.html' %}
 {% block breadcrumb %}
     <ol class="breadcrumb" style="background-color: #fff">
-        <li class="breadcrumb-item"><a href="{% url 'blog:index' %}">博客</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'blog:index' %}">主页</a></li>
         <li class="breadcrumb-item active">{{ post.title }}</li>
     </ol>
 {% endblock %}

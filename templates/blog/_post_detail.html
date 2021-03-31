@@ -7,8 +7,8 @@
         <div class="media">
             <div class="media-body">
                 {% block post_title %}
-                    <h3 class="media-heading font-weight-bold"><a
-                            href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                    <h3 class="media-heading font-weight-bold">
+                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
                     </h3>
                 {% endblock post_title %}
                 {% block post_meta %}
@@ -28,11 +28,12 @@
                             </span>
                         </li>
                         <li class="list-inline-item meta-date">
-                            <time class="card-text">{{ post.pub_date |date }}</time>
+                            <time class="card-text" title="{{ post.pub_date }}">{{ post.pub_date |date }}</time>
                         </li>
                         <li class="list-inline-item meta-comment">
                             {% get_comment_count for post as comment_count %}
-                            <a class="card-text" href="">评论 {{ comment_count }}</a>
+                            <a class="card-text"
+                               href="{{ post.get_absolute_url }}#comment-panel">评论 {{ comment_count }}</a>
                         </li>
                         <li class="list-inline-item meta-views">
                             <span class="card-text">阅读 {{ post.views }}</span>
@@ -61,7 +62,7 @@
                 <div class="media-right">
                     <a href="{{ post.get_absolute_url }}">
                         <img class="media-object" src="{{ post.cover.cover_thumbnail.url }}"
-                             alt="Sorry, picture can't display">
+                             alt="Sorry, we can't display the picture.">
                     </a>
                 </div>
             {% endif %}
