@@ -3,7 +3,7 @@
 <aside class="col-md-4">
     <div class="card">
         <div class="card-block">
-            <h3 class="card-title font-weight-bold">最新文章</h3>
+            <h3 class="card-title">最新文章</h3>
             <hr>
             <ul class="list-unstyled">
                 {% get_recent_posts as recent_posts %}
@@ -17,7 +17,7 @@
     </div>
     <div class="card">
         <div class="card-block">
-            <h3 class="card-title font-weight-bold">分类</h3>
+            <h3 class="card-title">分类</h3>
             <hr>
             <ul class="list-unstyled">
                 {% get_categories as category_list %}
@@ -35,7 +35,7 @@
     </div>
     <div class="card">
         <div class="card-block">
-            <h3 class="card-title font-weight-bold">标签云</h3>
+            <h3 class="card-title">标签云</h3>
             <hr>
             <ul class="list-inline">
                 {% get_tags as tag_list %}

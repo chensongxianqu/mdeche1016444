@@ -2,6 +2,39 @@ body {
     background-color: #f1f2f3;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+    font-weight: normal;
+    color: #000;
+    line-height: 1.35;
+}
+
+.post-body h1, .post-body h2, .post-body h3, .post-body h4, .post-body h5, .post-body h6 {
+    margin-top: 1.2em;
+    margin-bottom: 0.6em;
+    line-height: 1.35;
+}
+
+.post-body h1 {
+    font-size: 2em;
+}
+
+.post-body h2 {
+    font-size: 1.8em;
+}
+
+.post-body h3 {
+    font-size: 1.6em;
+}
+
+.post-body h4 {
+    font-size: 1.4em;
+}
+
+.post-body h5, .post-body h6 {
+    font-size: 1.2em;
+}
+
 /* 代码片断 */
 pre, code, pre tt {
     font-family: Courier, 'Courier New', monospace;

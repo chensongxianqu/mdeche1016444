@@ -24,8 +24,6 @@ class CommentReplyView(FormMixin, DetailView):
 
 
 class CommentSuccess(RedirectView):
-    permanent = True
-
     def get_redirect_url(self, *args, **kwargs):
         self.url = self.comment.get_absolute_url()
         return super(CommentSuccess, self).get_redirect_url(*args, **kwargs)

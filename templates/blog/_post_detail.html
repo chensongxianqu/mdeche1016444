@@ -7,9 +7,9 @@
         <div class="media">
             <div class="media-body">
                 {% block post_title %}
-                    <h3 class="media-heading font-weight-bold">
-                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                    </h3>
+                    <a href="{{ post.get_absolute_url }}">
+                        <h3 class="media-heading">{{ post.title }}</h3>
+                    </a>
                 {% endblock post_title %}
                 {% block post_meta %}
                     <ul class="list-inline text-muted post-meta">
