@@ -8,3 +8,15 @@
         {% include 'comments/list.html' %}
     </main>
 {% endblock main %}
+
+{% block script %}
+    <script>
+        $(function () {
+            var contents;
+            contents = gajus.Contents({
+                articles: $('.post-body').find('h1, h2, h3').get()
+            });
+            $('#toc').append(contents.list());
+        });
+    </script>
+{% endblock script %}

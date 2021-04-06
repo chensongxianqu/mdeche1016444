@@ -39,11 +39,13 @@
         <div class="row">
             {% block main %}
             {% endblock main %}
-            {% include 'blog/sidebar.html' %}
+            {% block sidebar %}
+                {% include 'blog/sidebar.html' %}
+            {% endblock sidebar %}
         </div>
     </div>
 </section>
-
+<div id="back-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
 <footer id="footer" class="p-y-2 bg-info">
     <div class="container">
         Powered by django 1.10 and Python 3.5
@@ -163,6 +165,34 @@
 <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/tether/1.3.7/js/tether.min.js"></script>
 <script src="{% static 'blog/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'blog/js/contents.js' %}"></script>
+<script>
+    $(function () {
+        $('#back-top').on('click', move);
+        $(window).on('scroll', function () {
+            checkPosition($(window).height() / 1.5);
+        });
+        checkPosition($(window).height());
+
+        function move() {
+            if ($(window).scrollTop() != 0) {
+                if (!$('body').is(':animated')) {
+                    $('html,body').animate({
+                        scrollTop: 0
+                    }, 800);
+                }
+            }
+        }
+
+        function checkPosition(pos) {
+            if ($(window).scrollTop() > pos) {
+                $('#back-top').fadeIn();
+            } else {
+                $('#back-top').fadeOut();
+            }
+        }
+    });
+</script>
 {% block script %}
 {% endblock script %}
 </body>

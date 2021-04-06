@@ -105,3 +105,18 @@ blockquote {
 .asteriskField {
     color: red;
 }
+
+#back-top {
+    cursor: pointer;
+    position: fixed;
+    right: 220px;
+    bottom: 50px;
+    display: none;
+    width: 52px;
+    height: 52px;
+    background-color: #d0d6d9;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 52px;
+    text-align: center;
+}
