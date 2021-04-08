@@ -13,4 +13,7 @@ urlpatterns = [
     # url(r'^messages/(?P<slug>.+)/$', views.AnnouncementDetailView.as_view(), name='announcement'),
     # url(r'^contact/$', views.ContactView.as_view(), name='contact'),
     url(r'^search/$', views.SearchView.as_view(), name='search'),
+    url(r'^archive/(?P<year>[0-9]{4})/$', views.PostYearArchiveView.as_view(), name='archive_year'),
+    url(r'^archive/(?P<year>[0-9]{4})/(?P<month>[0-9]+)/$', views.PostMonthArchiveView.as_view(),
+        name="archive_month"),
 ]

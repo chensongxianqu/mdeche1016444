@@ -63,4 +63,29 @@
             </div>
         </div>
     {% endif %}
+
+    <div class="card">
+        <div class="card-block">
+            <h3 class="card-title">归档</h3>
+            <hr>
+            {% get_archive as dates %}
+            {% regroup dates by year as dates_by_year %}
+            <ul>
+                {% for mouth in dates_by_year %}
+                    <li>
+                        <a href="{% url 'blog:archive_year' mouth.grouper %}"> {{ mouth.grouper }} 年</a>
+                        <ul>
+                            {% for d in mouth.list %}
+                                <li>
+                                    <a href="{% url 'blog:archive_month' mouth.grouper d|date:'m' %}">
+                                        {{ d |date:'n' }}月
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </aside>

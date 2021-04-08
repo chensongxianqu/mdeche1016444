@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DateDetailView, TemplateView, FormView, DetailView
+from django.views.generic import (ListView, DateDetailView, TemplateView, FormView,
+                                  DetailView, YearArchiveView, MonthArchiveView)
 from django.utils.html import mark_safe
 from django.core.urlresolvers import reverse
 
@@ -17,6 +18,24 @@ class IndexView(ListView):
     paginate_by = 10
     model = Post
     template_name = "blog/index.html"
+
+
+class PostYearArchiveView(YearArchiveView):
+    paginate_by = 10
+    queryset = Post.objects.all()
+    date_field = "pub_date"
+    make_object_list = True
+    context_object_name = 'post_list'
+    template_name = 'blog/index.html'
+
+
+class PostMonthArchiveView(MonthArchiveView):
+    paginate_by = 10
+    queryset = Post.objects.all()
+    date_field = "pub_date"
+    context_object_name = 'post_list'
+    template_name = 'blog/index.html'
+    month_format = '%m'
 
 
 class PostDetailView(DateDetailView):

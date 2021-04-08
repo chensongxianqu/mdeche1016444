@@ -28,13 +28,17 @@ def get_tags():
     return Tag.objects.all()
 
 
-@register.inclusion_tag('blog/recent_comments.html')
-def get_recent_comments(number=5):
-    comments = MyComment.objects.all()[:number]
-    return {'recent_comments': comments}
-
-
-@register.inclusion_tag('blog/archive.html')
+@register.simple_tag
 def get_archive():
-    dates = Post.objects.datetimes('pub_date', 'month', order='DESC')
-    return {'dates': dates}
+    return Post.objects.datetimes('pub_date', 'month', order='DESC')
+
+# @register.inclusion_tag('blog/recent_comments.html')
+# def get_recent_comments(number=5):
+#     comments = MyComment.objects.all()[:number]
+#     return {'recent_comments': comments}
+#
+#
+# @register.inclusion_tag('blog/archive.html')
+# def get_archive():
+#     dates = Post.objects.datetimes('pub_date', 'month', order='DESC')
+#     return {'dates': dates}
