@@ -1,3 +1,5 @@
+import re
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import mark_safe, escape
@@ -30,4 +32,6 @@ class MyComment(MPTTModel, CommentAbstractModel):
 
     @property
     def comment_html(self):
-        return mark_safe(markdownify(self.comment))
+        comment_seg = [escape(seg).replace('&gt;', '>') if not seg.startswith(('`', '```')) else seg for seg in
+                       re.split(r'(```.*?```|`.*?`)', self.comment, flags=re.DOTALL) if seg]
+        return mark_safe(markdownify(''.join(comment_seg)))
