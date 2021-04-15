@@ -23,6 +23,7 @@ class CommentReplyView(FormMixin, DetailView):
         return kwargs
 
 
+# TODO: fix redirect action very slow in production
 class CommentSuccess(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         self.url = self.comment.get_absolute_url()

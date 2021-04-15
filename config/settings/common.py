@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django_bleach',
 
     # third party apps
     'imagekit',
@@ -134,7 +135,12 @@ AUTH_USER_MODEL = 'users.User'
 
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
-MARKDOWNX_MARKDOWN_EXTENSIONS = ['markdown.extensions.extra', 'markdown.extensions.codehilite']
+MARKDOWNX_MARKDOWN_EXTENSIONS = [
+    'markdown.extensions.extra',
+    'markdown.extensions.nl2br',
+    'markdown.extensions.smarty',
+    'markdown.extensions.codehilite',
+]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -153,3 +159,9 @@ MANAGERS = ADMINS
 EMAIL_BACKEND = os.environ.get('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 
 SPLIT_DEFAULT_PARAGRAPHS = 1
+
+BLEACH_ALLOWED_TAGS = ['a', 'img', 'br', 'strong', 'b', 'code', 'pre',
+                       'p', 'div', 'em', 'span', 'h1', 'h2', 'h3', 'h4',
+                       'h5', 'h6', 'blockquote', 'ul', 'ol', 'tr', 'th', 'td',
+                       'hr', 'li', 'u', 'embed', 's', 'table', 'thead', 'tbody',
+                       'caption', 'small', 'q', 'sup', 'sub']

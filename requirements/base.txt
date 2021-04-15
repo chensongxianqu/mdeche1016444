@@ -11,6 +11,7 @@ django-bootstrap-pagination==1.6.2
 django-markdownx==1.6.3
 django-haystack==2.5.0
 django-imagekit==3.3
+django-bleach==0.3.0
 python-slugify==1.2.1
 Pillow==3.4.0
 Markdown==2.6.7

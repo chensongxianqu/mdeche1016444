@@ -68,17 +68,18 @@
         <div class="card-block">
             <h3 class="card-title">归档</h3>
             <hr>
-            {% get_archive as dates %}
-            {% regroup dates by year as dates_by_year %}
+            {% get_archive as archives %}
+            {% regroup archives by dates.year as archives_by_year %}
             <ul>
-                {% for mouth in dates_by_year %}
+                {% for archive in archives_by_year %}
                     <li>
-                        <a href="{% url 'blog:archive_year' mouth.grouper %}"> {{ mouth.grouper }} 年</a>
+                        <a href="{% url 'blog:archive_year' archive.grouper %}"> {{ archive.grouper }} 年</a>
                         <ul>
-                            {% for d in mouth.list %}
+                            {% for month in archive.list %}
                                 <li>
-                                    <a href="{% url 'blog:archive_month' mouth.grouper d|date:'m' %}">
-                                        {{ d |date:'n' }}月
+                                    <a href="{% url 'blog:archive_month' archive.grouper month.dates|date:'m' %}">
+                                        {{ month.dates |date:'n' }}月
+                                        <span class="pull-xs-right">({{ month.post_count }})</span>
                                     </a>
                                 </li>
                             {% endfor %}
@@ -86,6 +87,25 @@
                     </li>
                 {% endfor %}
             </ul>
+            {% comment %}
+            <ul>
+                {% for date in dates %}
+                    {% ifchanged date.archive_date.year %}
+
+                        {% if not forloop.first %}</li></ul>{% endif %}
+                        <li>
+                        <a href="{% url 'blog:archive_year' date.archive_date|date:'Y' %}"> {{ date.archive_date.year }}
+                            年</a>
+                        <ul>
+                    {% endifchanged %}
+                    <li>
+                        <a href="{% url 'blog:archive_month' date.archive_date|date:'Y' date.archive_date|date:'m' %}">
+                            {{ date.archive_date |date:'n' }}月 ({{ date.post_count }})
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+                {% endcomment %}
         </div>
     </div>
 </aside>

@@ -15,7 +15,7 @@ class Cover(TimeStampedModel):
     cover_caption = models.CharField(_('caption'), max_length=255, blank=True)
 
     def __str__(self):
-        return 'Cover-{0}:{1}'.format(self.pk, self.cover_caption)
+        return 'Cover-{0}: {1}'.format(self.pk, self.cover_caption or self.cover.name)
 
     class Meta:
         verbose_name = 'Cover'

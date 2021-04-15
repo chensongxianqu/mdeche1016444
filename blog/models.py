@@ -1,6 +1,9 @@
 from django.db import models
+from django.db.models.functions import TruncMonth
+from django.db.models import DateTimeField, F, Count
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import mark_safe
+
 from django.contrib.contenttypes.fields import GenericRelation
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -16,6 +19,13 @@ from mptt.models import MPTTModel
 from comments.models import MyComment
 
 
+class PostManager(models.Manager):
+    def archive(self):
+        return self.annotate(
+            dates=TruncMonth('pub_date', output_field=DateTimeField())
+        ).values('dates').annotate(post_count=Count('id')).order_by('-dates')
+
+
 class Post(StatusModel, TimeStampedModel, TimeFramedModel):
     """
     fields in parent classes:
@@ -27,6 +37,7 @@ class Post(StatusModel, TimeStampedModel, TimeFramedModel):
     'start'
     'end'
     """
+    objects = PostManager()
 
     STATUS = Choices(
         ('draft', _('draft')),
@@ -60,9 +71,6 @@ class Post(StatusModel, TimeStampedModel, TimeFramedModel):
         return self.title
 
     def save(self, *args, **kwargs):
-        # if not self.cover:
-        #     if self.category.cover:
-        #         self.cover = self.category.cover
         self.cover = self.cover or self.category.cover
         super(Post, self).save(*args, **kwargs)
 
@@ -75,6 +83,7 @@ class Post(StatusModel, TimeStampedModel, TimeFramedModel):
             'slug': self.slug,
         })
 
+    # TODO: refactor three methods below
     @property
     def body_html(self):
         return mark_safe(markdownify(self.body.content))
@@ -93,25 +102,3 @@ class Post(StatusModel, TimeStampedModel, TimeFramedModel):
     def increase_views(self):
         self.views += 1
         self.save(update_fields=['views'])
-
-# class Announcement(TimeStampedModel, TimeFramedModel, SoftDeletableModel):
-#     title = models.CharField(_('title'), max_length=255)
-#     body = models.TextField(_('body'))
-#     slug = AutoSlugField(_('slug'), populate_from='title', unique=True, allow_unicode=True)
-#     issuer = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='issuer')
-#     messages = GenericRelation(MyComment, object_id_field='object_pk', content_type_field='content_type')
-#
-#     class Meta:
-#         verbose_name = _('Announcement')
-#         verbose_name_plural = _('Announcements')
-#         get_latest_by = 'modified'
-#         ordering = ['-modified', 'title']
-#
-#     def __str__(self):
-#         return self.title
-#
-#     def get_absolute_url(self):
-#         return reverse('blog:announcement', kwargs={'slug': self.slug})
-#
-#     def directed_messages(self):
-#         return self.messages.filter(parent__isnull=True).order_by('submit_date')

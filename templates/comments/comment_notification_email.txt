@@ -1,14 +1,7 @@
-{% load i18n %}{% trans "Author" %}: {{ comment.name }} {{ comment.url }}
-{% trans "Email" %}: {{ comment.email }}
-{% trans "IP" %}: {{ comment.ip_address }}
+评论者: {{ comment.name }} {{ comment.url }}
 
-{% trans "Comment" %}:
+评论内容:
 {{ comment.comment }}
 
-{% trans "View this comment" %}: {{ protocol }}://{{ site }}{{ content_object.get_absolute_url }}#comment-{{ comment.pk }}-by-{{ comment.user_name|slugify }}
-
-{% trans "Flag this comment" %}: {{ protocol }}://{{ site }}{% url 'comments-flag' comment.pk %}
-
-{% trans "Delete this comment" %}: {{ protocol }}://{{ site }}{% url 'comments-delete' comment.pk %}
-
-{% trans "Approve this comment" %}: {{ protocol }}://{{ site }}{% url 'comments-approve' comment.pk %}
+请点击以下链接查看该评论:
+{{ protocol }}://{{ site }}{{ content_object.get_absolute_url }}#c{{ comment.pk }}

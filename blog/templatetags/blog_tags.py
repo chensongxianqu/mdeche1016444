@@ -30,7 +30,7 @@ def get_tags():
 
 @register.simple_tag
 def get_archive():
-    return Post.objects.datetimes('pub_date', 'month', order='DESC')
+    return Post.objects.archive()
 
 # @register.inclusion_tag('blog/recent_comments.html')
 # def get_recent_comments(number=5):

@@ -22,12 +22,12 @@ class Category(MPTTModel):
     tree = TreeManager()
 
     class Meta:
-        ordering = ('name', 'created')
+        ordering = ('-created', 'name')
         verbose_name = _('Category')
         verbose_name_plural = _('Categories')
 
     class MPTTMeta:
-        order_insertion_by = ['name']
+        order_insertion_by = ['created']
 
     def __str__(self):
         return self.name

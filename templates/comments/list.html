@@ -1,4 +1,4 @@
-{% load staticfiles comments %}
+{% load staticfiles comments bleach_tags %}
 <div class="card card-block">
     {% render_comment_form for post %}
 </div>
@@ -33,10 +33,10 @@
                                 <a href="{% url 'comments:reply' root_comment.pk %}">回复</a>
                             </li>
                         </ul>
-                        <div class="card-text">{{ root_comment.comment_html }}</div>
+                        <div class="card-text">{{ root_comment.comment_html|bleach|safe }}</div>
 
                         <!-- Nested media object -->
-                        {% for desc_comment in root_comment.get_descendants_by_time %}
+                        {% for desc_comment in root_comment.get_descendants_reversely %}
                             <div class="media" id="c{{ desc_comment.pk }}">
                                 <a class="media-left" href="#">
                                     <img class="media-object" src="{% static 'blog/images/default_avatar.jpg' %}"
@@ -59,7 +59,7 @@
                                             <a href="{% url 'comments:reply' desc_comment.pk %}">回复</a>
                                         </li>
                                     </ul>
-                                    <div class="card-text">{{ desc_comment.comment_html }}</div>
+                                    <div class="card-text">{{ desc_comment.comment_html|bleach|safe }}</div>
                                 </div>
                             </div>
                         {% endfor %}

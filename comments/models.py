@@ -27,11 +27,9 @@ class MyComment(MPTTModel, CommentAbstractModel):
     class MPTTMeta:
         order_insertion_by = ['-submit_date']
 
-    def get_descendants_by_time(self):
+    def get_descendants_reversely(self):
         return self.get_descendants().order_by('submit_date')
 
     @property
     def comment_html(self):
-        comment_seg = [escape(seg).replace('&gt;', '>') if not seg.startswith(('`', '```')) else seg for seg in
-                       re.split(r'(```.*?```|`.*?`)', self.comment, flags=re.DOTALL) if seg]
-        return mark_safe(markdownify(''.join(comment_seg)))
+        return markdownify(self.comment)

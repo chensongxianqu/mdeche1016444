@@ -21,10 +21,11 @@ class CommentModerator(DjangoCommentModerator):
         c = {
             'comment': comment,
             'content_object': content_object,
+            'site': get_current_site(request).domain,
+            'protocol': 'http'
         }
-        subject = _('[%(site)s] New comment posted on "%(object)s"') % {
+        subject = _('你在 [%(site)s] 的评论有了新回复') % {
             'site': get_current_site(request).name,
-            'object': content_object,
         }
         message = t.render(Context(c) if VERSION < (1, 8) else c)
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, set(recipient_list), fail_silently=True)
