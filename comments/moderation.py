@@ -1,3 +1,5 @@
+import threading
+
 from django import VERSION
 from django.conf import settings
 from django.utils.translation import ugettext as _
@@ -28,4 +30,7 @@ class CommentModerator(DjangoCommentModerator):
             'site': get_current_site(request).name,
         }
         message = t.render(Context(c) if VERSION < (1, 8) else c)
-        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, set(recipient_list), fail_silently=True)
+        threading.Thread(target=send_mail,
+                         args=(subject, message, settings.DEFAULT_FROM_EMAIL, set(recipient_list)),
+                         kwargs={'fail_silently': True}).start()
+        # send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, set(recipient_list), fail_silently=True)

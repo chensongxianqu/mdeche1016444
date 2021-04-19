@@ -87,25 +87,6 @@
                     </li>
                 {% endfor %}
             </ul>
-            {% comment %}
-            <ul>
-                {% for date in dates %}
-                    {% ifchanged date.archive_date.year %}
-
-                        {% if not forloop.first %}</li></ul>{% endif %}
-                        <li>
-                        <a href="{% url 'blog:archive_year' date.archive_date|date:'Y' %}"> {{ date.archive_date.year }}
-                            年</a>
-                        <ul>
-                    {% endifchanged %}
-                    <li>
-                        <a href="{% url 'blog:archive_month' date.archive_date|date:'Y' date.archive_date|date:'m' %}">
-                            {{ date.archive_date |date:'n' }}月 ({{ date.post_count }})
-                        </a>
-                    </li>
-                {% endfor %}
-                </ul>
-                {% endcomment %}
         </div>
     </div>
 </aside>

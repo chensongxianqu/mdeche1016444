@@ -83,7 +83,6 @@ class Post(StatusModel, TimeStampedModel, TimeFramedModel):
             'slug': self.slug,
         })
 
-    # TODO: refactor three methods below
     @property
     def body_html(self):
         return mark_safe(markdownify(self.body.content))
