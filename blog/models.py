@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.db.models.functions import TruncMonth
 from django.db.models import DateTimeField, F, Count
@@ -27,16 +29,6 @@ class PostManager(models.Manager):
 
 
 class Post(StatusModel, TimeStampedModel, TimeFramedModel):
-    """
-    fields in parent classes:
-
-    'status'
-    'status_changed'
-    'created'
-    'modified'
-    'start'
-    'end'
-    """
     objects = PostManager()
 
     STATUS = Choices(
@@ -76,10 +68,9 @@ class Post(StatusModel, TimeStampedModel, TimeFramedModel):
 
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={
-            'pk': self.pk,
-            'year': self.pub_date.year,
-            'month': self.pub_date.month,
-            'day': self.pub_date.day,
+            'year': self.pub_date.strftime('%Y'),
+            'month': self.pub_date.strftime('%m'),
+            'day': self.pub_date.strftime('%d'),
             'slug': self.slug,
         })
 

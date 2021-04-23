@@ -29,9 +29,9 @@ info_dict = {
 
 
 urlpatterns = [
+    url(r'', include('blog.urls', namespace='blog')),
     url(r'^admin/', admin.site.urls),
     url(r'^comment/', include('django_comments.urls')),
-    url(r'', include('blog.urls', namespace='blog')),
     url(r'^comment/', include('comments.urls', namespace='comments')),
     url(r'^sitemap\.xml$', sitemap,
         {'sitemaps': {'blog': GenericSitemap(info_dict, priority=0.6)}},

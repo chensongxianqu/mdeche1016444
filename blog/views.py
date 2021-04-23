@@ -4,7 +4,7 @@ from django.views.generic import (ListView, DateDetailView, TemplateView, FormVi
 from django.utils.html import mark_safe
 from django.core.urlresolvers import reverse
 
-from braces.views import MessageMixin, FormValidMessageMixin
+from braces.views import MessageMixin, FormValidMessageMixin, SetHeadlineMixin
 from taggit.models import Tag
 from haystack.generic_views import SearchView as HaystackSearchView
 
@@ -20,22 +20,24 @@ class IndexView(ListView):
     template_name = "blog/index.html"
 
 
-class PostYearArchiveView(YearArchiveView):
+class PostYearArchiveView(SetHeadlineMixin, YearArchiveView):
     paginate_by = 10
     queryset = Post.objects.all()
     date_field = "pub_date"
     make_object_list = True
     context_object_name = 'post_list'
     template_name = 'blog/index.html'
+    headline = '文章归档_追梦人物的博客'
 
 
-class PostMonthArchiveView(MonthArchiveView):
+class PostMonthArchiveView(SetHeadlineMixin, MonthArchiveView):
     paginate_by = 10
     queryset = Post.objects.all()
     date_field = "pub_date"
     context_object_name = 'post_list'
     template_name = 'blog/index.html'
     month_format = '%m'
+    headline = '文章归档_追梦人物的博客'
 
 
 class PostDetailView(DateDetailView):
@@ -50,10 +52,10 @@ class PostDetailView(DateDetailView):
         return response
 
 
-class InCategoryView(MessageMixin, ListView):
+class InCategoryView(MessageMixin, SetHeadlineMixin, ListView):
     paginate_by = 10
     model = Post
-    template_name = "blog/index.html"
+    template_name = "blog/in_category.html"
 
     def get_queryset(self):
         c = get_object_or_404(Category, slug=self.kwargs.get('slug'))
@@ -62,11 +64,15 @@ class InCategoryView(MessageMixin, ListView):
             mark_safe("分类 <strong>{0}</strong>，{1} 篇文章".format(c.name, posts.count())))
         return posts
 
+    def get_headline(self):
+        c = get_object_or_404(Category, slug=self.kwargs.get('slug'))
+        return "%s_追梦人物的博客" % c.name
 
-class InTagView(MessageMixin, ListView):
+
+class InTagView(SetHeadlineMixin, MessageMixin, ListView):
     paginate_by = 10
     model = Post
-    template_name = "blog/index.html"
+    template_name = "blog/in_tag.html"
 
     def get_queryset(self):
         t = get_object_or_404(Tag, slug=self.kwargs.get('slug'))
@@ -74,6 +80,10 @@ class InTagView(MessageMixin, ListView):
         self.messages.info(
             mark_safe("标签 <strong>{0}</strong>，{1} 篇文章".format(t.name, posts.count())))
         return posts
+
+    def get_headline(self):
+        t = get_object_or_404(Tag, slug=self.kwargs.get('slug'))
+        return "%s_追梦人物的博客" % t.name
 
 
 # class MessageBoardView(ListView):

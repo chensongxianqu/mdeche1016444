@@ -14,7 +14,8 @@
                 {% block post_meta %}
                     <ul class="list-inline text-muted post-meta">
                         <li class="list-inline-item meta-category">
-                            <a class="card-text" href="{% url 'blog:in_category' post.category.slug %}">
+                            <a class="card-text" href="{% url 'blog:in_category' post.category.slug %}"
+                               title="{{ post.category }}分类下的全部文章">
                                 {{ post.category.name }}
                             </a>
                         </li>
@@ -32,7 +33,7 @@
                         </li>
                         <li class="list-inline-item meta-comment">
                             {% get_comment_count for post as comment_count %}
-                            <a class="card-text"
+                            <a class="card-text" title="查看全部评论"
                                href="{{ post.get_absolute_url }}#comment-panel">评论 {{ comment_count }}</a>
                         </li>
                         <li class="list-inline-item meta-views">
@@ -60,9 +61,9 @@
             </div>
             {% if post.cover %}
                 <div class="media-right">
-                    <a href="{{ post.get_absolute_url }}">
+                    <a href="{{ post.get_absolute_url }}" title="阅读全文">
                         <img class="media-object" src="{{ post.cover.cover_thumbnail.url }}"
-                             alt="Sorry, we can't display the picture.">
+                             alt="">
                     </a>
                 </div>
             {% endif %}
