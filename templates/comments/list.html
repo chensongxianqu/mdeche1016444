@@ -22,7 +22,12 @@
                     <div class="media-body">
                         <ul class="list-inline comment-meta">
                             <li class="list-inline-item">
-                                <span class="media-heading font-weight-bold">{{ root_comment.name }}</span>
+                                <span class="media-heading font-weight-bold">
+                                    {{ root_comment.name }}
+                                    {% if root_comment.user.is_superuser %}
+                                        <span class="tag tag-info">博主</span>
+                                    {% endif %}
+                                </span>
                             </li>
                             <li class="list-inline-item">
                                 <time class="text-muted"
@@ -46,9 +51,16 @@
                                 <div class="media-body">
                                     <ul class="list-inline comment-meta">
                                         <li class="list-inline-item">
-                                            <span class="media-heading font-weight-bold">{{ desc_comment.name }}</span>
+                                            <span class="media-heading font-weight-bold">{{ desc_comment.name }}
+                                                {% if desc_comment.user.is_superuser %}
+                                                    <span class="tag tag-info">博主</span>
+                                                {% endif %}
+                                            </span>
                                             <i class="fa fa-share" aria-hidden="true"></i>
-                                            <span class="media-heading font-weight-bold">{{ desc_comment.parent.name }}</span>
+                                            <span class="media-heading font-weight-bold">{{ desc_comment.parent.name }}
+                                                {% if desc_comment.parent.user.is_superuser %}
+                                                    <span class="tag tag-info">博主</span>
+                                                {% endif %}</span>
                                         </li>
                                         <li class="list-inline-item">
                                             <time class="text-muted"

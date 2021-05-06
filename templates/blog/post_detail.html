@@ -3,7 +3,8 @@
     <ol class="breadcrumb" style="background-color: #fff">
         <li class="breadcrumb-item"><a href="{% url 'blog:index' %}"><i class="fa fa-home" aria-hidden="true"></i></a>
         </li>
-        <li class="breadcrumb-item"><a href="{% url 'blog:index' %}">{{ post.category }}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'blog:in_category' post.category.slug %}">{{ post.category }}</a>
+        </li>
         <li class="breadcrumb-item active">{{ post.title }}</li>
     </ol>
 {% endblock %}

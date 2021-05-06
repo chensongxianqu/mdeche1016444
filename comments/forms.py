@@ -48,6 +48,9 @@ class MyCommentForm(CommentForm):
         )
         self.helper.add_input(Submit('submit', '发表评论', css_class='btn-sm pull-xs-right'))
         self.fields['comment'].widget.attrs['rows'] = 6
+        self.fields['comment'].label = '评论'
+        self.fields['name'].label = '名字'
+        self.fields['url'].label = '网址'
 
     def get_comment_model(self):
         return get_model()
