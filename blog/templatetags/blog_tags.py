@@ -19,7 +19,7 @@ def get_recent_posts(number=5):
 @register.simple_tag
 def get_categories():
     categories = Category.objects.all().annotate(
-        num_categories=Count('post')).filter(num_categories__gt=0)
+        post_count=Count('post')).filter(post_count__gt=0)
     return categories
 
 

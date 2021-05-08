@@ -1,122 +1,54 @@
-body {
-    background-color: #f1f2f3;
+.archive-list ul li a span.year {
+    margin-left: 30px;
+    text-transform: uppercase;
+    transition: all 0.4s ease 0s;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
-    font-weight: normal;
-    color: #000;
-    line-height: 1.35;
+.archive-list ul li a:hover:before,
+.archive-list ul li a:hover span.year {
+    color: #66cc99;
 }
 
-.post-body h1, .post-body h2, .post-body h3, .post-body h4, .post-body h5, .post-body h6 {
-    margin-top: 1.2em;
-    margin-bottom: 0.6em;
-    line-height: 1.35;
+.archive-list .month-list {
+    margin-left: 10px;
 }
 
-.post-body h1 {
-    font-size: 2em;
+.archive-list .month-list li {
+    border-bottom: none;
 }
 
-.post-body h2 {
-    font-size: 1.8em;
+.archive-list .month-list li a:before {
+    content: none;
 }
 
-.post-body h3 {
-    font-size: 1.6em;
-}
-
-.post-body h4 {
-    font-size: 1.4em;
-}
-
-.post-body h5, .post-body h6 {
-    font-size: 1.2em;
-}
-
-/* 代码片断 */
-pre, code, pre tt {
-    font-family: Courier, 'Courier New', monospace;
-}
-
-pre {
-    background: #f8f8f8;
-    border: 1px solid #ddd;
-    padding: 1em 1.5em;
-    display: block;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* 块/段落引用 */
-blockquote {
-    position: relative;
-    color: #999;
-    font-weight: 400;
-    border-left: 3px solid #1abc9c;
-    padding-left: 1em;
-    margin: 1em 3em 1em 2em;
-}
-
-@media only screen and ( max-width: 640px ) {
-    blockquote {
-        margin: 1em 0;
-    }
-}
-
-.post-body img {
-    max-width: 100%;
-}
-
-.post-meta {
-    font-size: 14px;
-    margin: 8px 0 16px 0;
-}
-
-.post-meta a {
-    color: #818a91;
-}
-
-.post-meta li {
-    margin: 0 !important;
-}
-
-.post-meta .meta-category:after, .meta-author:after, .meta-date:after, .meta-comment:after {
-    content: '·';
-}
-
-.comment-meta {
-    margin-bottom: 5px;
-    font-size: 14px;
-}
-
-.comment-meta li {
-    margin: 0 !important;
-}
-
-.comment-meta li:not(:last-child):after {
-    content: '·';
-}
-
-#div_id_honeypot {
-    display: none;
-}
-
-.asteriskField {
-    color: red;
-}
-
-#back-top {
-    cursor: pointer;
-    position: fixed;
-    right: 220px;
-    bottom: 50px;
-    display: none;
-    width: 52px;
-    height: 52px;
-    background-color: #d0d6d9;
-    font-size: 24px;
+.post-content .post-title {
     font-weight: bold;
-    line-height: 52px;
-    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Does not support IE*/
+.post-content .post-short-desc {
+    height: 96px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+}
+
+.single-blog-details {
+    padding-top: 0 !important;
+}
+
+.single-blog-details h1.post-title:after {
+    content: "";
+    position: absolute;
+    background: none;
+    width: 170px;
+    height: 2px;
+    display: inline-block;
+    top: 47px;
+    left: 50%;
+    margin-left: -85px;
 }

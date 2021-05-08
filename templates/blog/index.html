@@ -1,6 +1,113 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
+{% load comments %}
+{% load bootstrap_pagination %}
+
 {% block main %}
-    <main class="col-md-8">
-        {% include 'blog/_post_list.html' %}
-    </main>
+    <div class="col-md-8 col-sm-12">
+        <div class="popular-posts-area">
+            <div class="row">
+                {% for post in post_list %}
+                    {% if forloop.counter < 5 %}
+                        <div class="col-md-6 col-sm-6">
+                            <div class="single-popular-post">
+                                <div class="post-img">
+                                    <a href="{{ post.get_absolute_url }}">
+                                        <img src="{% if post.cover %}{{ post.cover.cover_370_230.url }}{% else %}
+                                             {{ post.category.cover.cover_370_230.url }}{% endif %}"
+                                             alt="Popular Post"/>
+                                    </a>
+                                    <a href="{% url 'blog:in_category' post.category.slug %}"
+                                       class="post-tag">
+                                        {{ post.category }}
+                                    </a>
+                                    <div class="post-info">
+                                        <p>
+                                            <span class="post-date">
+                                                <a href="{{ post.get_absolute_url }}">{{ post.pub_date | date:'Y-m-d' }}</a>
+                                            </span>
+                                            {% get_comment_count for post as comment_count %}
+                                            <span class="post-comments">
+                                                <a href="#">{{ comment_count }} 评论</a>
+                                            </span>
+                                            <span class="post-social-links">
+												<a href="{{ post.get_absolute_url }}">{{ post.views }} 阅读</a>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <h6 class="post-title">
+                                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                    </h6>
+                                    <div class="post-short-desc">
+                                        {% if post.lead %}
+                                            {{ post.lead_html | truncatechars_html:200 }}
+                                        {% else %}
+                                            {{ post.excerpt_html | truncatechars_html:200 }}
+                                        {% endif %}
+                                    </div>
+                                    <a href="{{ post.get_absolute_url }}"
+                                       class="continue-link">继续阅读...</a>
+                                </div>
+                            </div><!-- /.single-popular-post -->
+                        </div>
+                        {% if forloop.counter == 4 %}
+                            </div>
+                            </div><!-- /.popular-posts-area -->
+                            <!-- latest-reviews-area start -->
+                            <div id="latest-reviews" class="latest-reviews-area">
+                            <div class="row">
+                        {% endif %}
+                    {% else %}
+                        <div class="col-md-12">
+                            <div class="single-review">
+                                <div class="post-img">
+                                    <a href="{{ post.get_absolute_url }}">
+                                        <img src="{% if post.cover %}{{ post.cover.cover_770_300.url }}{% else %}
+                                             {{ post.category.cover.cover_770_300.url }}{% endif %}"
+                                             alt="Review Image"/>
+                                    </a>
+                                    <a href="#" class="post-tag">{{ post.category }}</a>
+                                    <div class="post-info">
+                                        <p>
+                                            <span class="post-date">
+                                            <a href="#">{{ post.pub_date | date:'Y-m-d' }}</a>
+                                            </span>
+                                            {% get_comment_count for post as comment_count %}
+                                            <span class="post-comments"><a
+                                                    href="#">{{ comment_count }} 评论</a></span>
+                                            <span class="post-social-links">
+														<a href="{{ post.get_absolute_url }}">{{ post.views }} 阅读</a>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <h6 class="post-title">
+                                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                    </h6>
+                                    <div class="post-short-desc">
+                                        {% if post.lead %}
+                                            {{ post.lead_html | truncatechars_html:200 }}
+                                        {% else %}
+                                            {{ post.excerpt_html | truncatechars_html:200 }}
+                                        {% endif %}
+                                    </div>
+                                    <a href="{{ post.get_absolute_url }}" class="continue-link">继续阅读...</a>
+                                </div>
+                            </div><!-- /.single-review -->
+                        </div>
+                    {% endif %}
+                {% empty %}
+                    暂无文章
+                {% endfor %}
+                </div>
+
+                </div>
+        {% if post_list %}
+            {% bootstrap_paginate page_obj range=10 show_first_last='true' size='small' %}
+        {% endif %}
+        <!-- latest-reviews-area end -->
+    </div>
 {% endblock main %}

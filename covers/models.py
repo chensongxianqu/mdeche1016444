@@ -8,10 +8,14 @@ from model_utils.models import TimeStampedModel
 
 class Cover(TimeStampedModel):
     cover = models.ImageField(_('cover'), upload_to='covers/%Y/%m/%d/')
-    cover_thumbnail = ImageSpecField(source='cover',
-                                     processors=[ResizeToFill(100, 100)],
-                                     format='JPEG',
-                                     options={'quality': 90})
+    cover_370_230 = ImageSpecField(source='cover',
+                                   processors=[ResizeToFill(370, 230)],
+                                   format='JPEG',
+                                   options={'quality': 100})
+    cover_770_300 = ImageSpecField(source='cover',
+                                   processors=[ResizeToFill(770, 300)],
+                                   format='JPEG',
+                                   options={'quality': 100})
     cover_caption = models.CharField(_('caption'), max_length=255, blank=True)
 
     def __str__(self):

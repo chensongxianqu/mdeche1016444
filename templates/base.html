@@ -1,145 +1,280 @@
 {% load staticfiles %}
+{% load blog_tags %}
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html class="no-js" lang="zh-cn">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    {% block title %}
+        <title>{{ headline|default:"追梦人物的博客 - 探索 Python、分享 Python" }}</title>
+    {% endblock title %}
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="baidu-site-verification" content="BB0a0qDxyr"/>
     <meta name="robots" content="follow, all"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="探索 Python 世界，分享 django web开发、Python 数据分析、Python 网络爬虫等一切与 Python 相关的知识"/>
-    {% block title %}
-        <title>{{ headline|default:'追梦人物的博客 - 探索 Python、分享 Python' }}</title>
-    {% endblock title %}
-    <link href="{% static 'blog/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <!-- favicon
+    ============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+
+    <!-- Google Fonts
+    ============================================ -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap CSS
+    ============================================ -->
+    <link rel="stylesheet" href="{% static 'blog/css/bootstrap.min.css' %}">
+    <!-- font-awesome CSS
+    ============================================ -->
+    <link rel="stylesheet" href="{% static 'blog/css/font-awesome.min.css' %}">
+    <!-- owl.carousel CSS
+    ============================================ -->
+    <link rel="stylesheet" href="{% static 'blog/css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/owl.theme.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/owl.transitions.css' %}">
+    <!-- meanmenu CSS
+    ============================================ -->
+    <link rel="stylesheet" href="{% static 'blog/css/meanmenu.css' %}">
+    <!-- normalize CSS
+    ============================================ -->
+    <link rel="stylesheet" href="{% static 'blog/css/normalize.css' %}">
+    <!-- main CSS
+    ============================================ -->
+    <link rel="stylesheet" href="{% static 'blog/css/main.css' %}">
+    <!-- style CSS
+    ============================================ -->
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
+    <!-- code highlight CSS
+        ============================================ -->
     <link href="{% static 'blog/css/github.css' %}" rel="stylesheet">
-    <link href="{% static 'blog/css/custom.css' %}" rel="stylesheet">
+    <!-- responsive CSS
+    ============================================ -->
+    <link rel="stylesheet" href="{% static 'blog/css/responsive.css' %}">
+    <!-- modernizr JS
+    ============================================ -->
     {% block link %}
     {% endblock link %}
     {% block style %}
     {% endblock style %}
+    <script src="{% static 'blog/js/vendor/modernizr-2.8.3.min.js' %}"></script>
 </head>
-<body>
-<header>
-    <header class="m-b-2">
-        <nav class="navbar navbar-dark bg-info">
-            <div class="container">
-                <a class="navbar-brand" href="{% url 'blog:index' %}" title="博客主页">追梦人物的博客</a>
-                {% comment %}
-                <ul class="nav navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'blog:index' %}">主页<span class="sr-only">(current)</span></a>
-                    </li>
-                </ul>
-                {% endcomment %}
-                <form class="form-inline pull-xs-right" action="{% url 'blog:search' %}">
-                    <input class="form-control" type="text" name="q" placeholder="输入关键字搜索">
-                    <button class="btn btn-success" type="submit">搜索</button>
-                </form>
+<body class="home-2">
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- header-area start -->
+<header id="header" class="header-area">
+    <div class="header-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <div class="header-top-left">
+                        <ul class="social-icons">
+                            <li><a href="https://github.com/zmrenwu"><i class="fa fa-github" aria-hidden="true"></i></a>
+                            </li>
+                            <li><a href="http://weibo.com/u/2494998151"><i class="fa fa-weibo"
+                                                                           aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <div class="header-top-right fix">
+                        <div class="header-search">
+                            <form action="#" method="post">
+                                <button type="button" class="search-toggler"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </div><!-- /.header-top -->
+    <div class="header-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="logo">
+                        <a href="{% url 'blog:index' %}">
+                            <img src="{% static 'blog/img/logo/logo.png' %}" alt="Logo"/>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="main-menu">
+                        <nav>
+                            <ul class="main-nav navbar-right">
+                                <li><a href="{% url 'blog:index' %}">主页</a></li>
+                                <li><a href="#">关于</a></li>
+                                <li><a href="#">联系我</a></li>
+                            </ul>
+                        </nav>
+                    </div><!-- /.main-menu -->
+                </div>
+            </div>
+        </div>
+        <!-- mobile-menu-area start -->
+        <div class="mobile-menu-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav id="dropdown">
+                            <ul>
+                                <li><a href="#">主页</a></li>
+                                <li><a href="#">关于</a></li>
+                                <li><a href="#">联系我</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- mobile-menu-area end -->
+    </div><!-- /.header-bottom -->
 </header>
-<section class="m-b-2">
+<!-- header-area end -->
+
+<!-- search-area start -->
+<div class="search-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="search-form">
+                    <span class="search-close"></span>
+                    <form action="{% url 'blog:search' %}" method="get">
+                        {% csrf_token %}
+                        <input type="text" name="q" placeholder="输入关键词搜索..."/>
+                        <button type="submit" class="search-btn"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- search-area end -->
+
+<!-- slider-area start -->
+
+<!-- slider-area end -->
+
+<!-- main-content-area start -->
+<div id="main-content" class="main-content-area">
     <div class="container">
         <div class="row">
             {% block main %}
             {% endblock main %}
-            {% block sidebar %}
-                {% include 'blog/sidebar.html' %}
-            {% endblock sidebar %}
+            {% block aside %}
+                <div class="col-md-4 col-md-offset-0 col-sm-8 col-sm-offset-2">
+                    <div class="sidebar-area fix">
+                        <div class="single-sidebar-widget">
+                            <h6 class="widget-title">关于我</h6>
+                            <div class="sidebar-content about-me">
+                                <div class="my-photo">
+                                    <a href="#"><img class="img-circle" src="img/sidebar/me.jpg" alt="My Image"/></a>
+                                </div>
+                                <p>Lorem ipsum dolor sit amet, consecteturs adipisicing elit, sed do
+                                    eiusmod tempor incididunt labore et dolore aliqua. Ut enim ad minim veniam,</p>
+                            </div><!-- /.sidebar-content -->
+                        </div><!-- /.single-sidebar-widget -->
+                        <div class="single-sidebar-widget">
+                            <h6 class="widget-title">分类</h6>
+                            <div class="sidebar-content">
+                                <div class="categories-list">
+                                    {% get_categories as category_list %}
+                                    <ul>
+                                        {% for category in category_list %}
+                                            <li>
+                                                <a href="{% url 'blog:in_category' category.slug %}">
+                                                    <span class="category">{{ category }}</span>
+                                                    <span class="number">({{ category.post_count }})</span>
+                                                </a>
+                                            </li>
+                                        {% empty %}
+                                            暂无分类
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div><!-- /.sidebar-content -->
+                        </div><!-- /.single-sidebar-widget -->
+                        <div class="single-sidebar-widget">
+                            <h6 class="widget-title">归档</h6>
+                            {% get_archive as archives %}
+                            {% regroup archives by dates.year as archives_by_year %}
+                            <div class="sidebar-content">
+                                <div class="archive-list">
+                                    <ul>
+                                        {% for archive in archives_by_year %}
+                                            <li><a href="{% url 'blog:archive_year' archive.grouper %}">
+                                                <span class="year">{{ archive.grouper }} 年</span></a>
+                                                <ul class="month-list">
+                                                    {% for month in archive.list %}
+                                                        <li>
+                                                            <a href="{% url 'blog:archive_month' archive.grouper month.dates|date:'m' %}">
+                                                                <span class="month">{{ month.dates |date:'n' }} 月</span><span
+                                                                    class="number">({{ month.post_count }})</span></a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div><!-- /.sidebar-content -->
+                        </div><!-- /.single-sidebar-widget -->
+                        <div class="single-sidebar-widget">
+                            <h6 class="widget-title">标签云</h6>
+                            <div class="sidebar-content">
+                                <div class="tags-list">
+                                    {% get_tags as tag_list %}
+                                    <ul>
+                                        {% for tag in tag_list %}
+                                            <li><a href="{% url 'blog:in_tag' tag.slug %}">{{ tag }}</a></li>
+                                        {% empty %}
+                                            暂无标签
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div><!-- /.sidebar-content -->
+                        </div><!-- /.single-sidebar-widget -->
+                    </div><!-- /.sidebar-area -->
+                </div>
+            {% endblock aside %}
         </div>
     </div>
-</section>
-<div id="back-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
-<footer id="footer" class="p-y-2 bg-info">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-3 column">
-                <h4>
-                    博客信息
-                </h4>
-                <ul class="nav">
-                    <li>
-                        基于 django 1.10 和 Python 3.5 开发
-                    </li>
-                </ul>
-            </div>
-            <div class="col-xs-6 col-md-3 column">
-                <h4>
-                    博客源码地址
-                </h4>
-                <ul class="nav">
-                    <li>
-                        <a href="https://github.com/zmrenwu/django-blog-zm" style="color: white" rel="nofollow">
-                            <i class="fa fa-github" aria-hidden="true"></i> django-blog-zm
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-xs-6 col-md-3 column">
-                <h4>
-                    联系我
-                </h4>
-                <ul class="nav">
-                    <li>
-                        发送邮件到 zmrenwu@163.com
-                    </li>
-                </ul>
-            </div>
-            <div class="col-xs-6 col-md-3 column">
-                <h4>
-                    友情链接
-                </h4>
-                <ul class="nav">
-                    <li>
-                        <a href="http://yshblog.com/">杨士航的博客</a>
-                    </li>
-                    <li>
-                        <a href="http://codingpy.com/tag/django/">编程派</a>
-                    </li>
-                    <li>
-                        <a href="http://www.jianshu.com/users/f0c09f959299/latest_articles">我的简书主页</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+</div>
+<!-- main-content-area end -->
+
+<!-- footer-area start -->
+<footer id="footer" class="footer-area text-center">
+    <div class="footer-logo">
+        <a href="#"><img src="img/logo/footer-logo.png" alt="Footer Logo"/></a>
     </div>
+    <p class="copyright-text">&copy; Copyright© 2015 Blogging. All right reserved.</p>
 </footer>
+<!-- footer-area end -->
 
-<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/tether/1.3.7/js/tether.min.js"></script>
+<!-- jquery
+============================================ -->
+<script src="{% static 'blog/js/vendor/jquery-1.11.3.min.js' %}"></script>
+<!-- bootstrap JS
+============================================ -->
 <script src="{% static 'blog/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'blog/js/contents.js' %}"></script>
-<script>
-    $(function () {
-        $('#back-top').on('click', move);
-        $(window).on('scroll', function () {
-            checkPosition($(window).height() / 1.5);
-        });
-        checkPosition($(window).height());
-
-        function move() {
-            if ($(window).scrollTop() != 0) {
-                if (!$('body').is(':animated')) {
-                    $('html,body').animate({
-                        scrollTop: 0
-                    }, 800);
-                }
-            }
-        }
-
-        function checkPosition(pos) {
-            if ($(window).scrollTop() > pos) {
-                $('#back-top').fadeIn();
-            } else {
-                $('#back-top').fadeOut();
-            }
-        }
-    });
-</script>
-{% block script %}
-{% endblock script %}
+<!-- meanmenu JS
+============================================ -->
+<script src="{% static 'blog/js/jquery.meanmenu.js' %}"></script>
+<!-- owl.carousel JS
+============================================ -->
+<script src="{% static 'blog/js/owl.carousel.min.js' %}"></script>
+<!-- scrollUp JS
+============================================ -->
+<script src="{% static 'blog/js/jquery.scrollUp.min.js' %}"></script>
+<!-- plugins JS
+============================================ -->
+<script src="{% static 'blog/js/plugins.js' %}"></script>
+<!-- main JS
+============================================ -->
+<script src="{% static 'blog/js/main.js' %}"></script>
 </body>
 </html>

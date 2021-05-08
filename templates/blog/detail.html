@@ -1,22 +1,68 @@
 {% extends 'base.html' %}
-{% block title %}
-    <title>{{ post.title }}_{{ post.category }}_追梦人物的博客</title>
-{% endblock title %}
 {% block main %}
-    <main class="col-md-8">
-        {% include 'blog/post_detail.html' %}
-        {% include 'comments/list.html' %}
-    </main>
-{% endblock main %}
+    <!-- single-blog-area start -->
+    <div class="col-md-8 col-sm-12">
+        <div class="single-blog-details">
+            <span class="tag">{{ post.category }}</span>
+            <h1 class="post-title">{{ post.title }}</h1>
+            <p class="post-date">发表于 {{ post.pub_date|date }}</p>
+            <div class="post-long-desc">
+                {% if post.lead %}
+                    <blockquote>
+                        {{ post.lead_html }}
+                    </blockquote>
+                {% endif %}
+                {{ post.body_html }}
+            </div>
+            <div class="single-blog-bottom fix">
+                <div class="post-social-links pull-left">
+                    <p>
+                        <span class="lbl">分享到&nbsp;&nbsp;-</span>
+                        <span>
+                            <a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a>
+                        </span>
+                    </p>
+                </div>
+                <div class="post-tags pull-right">
+                    <p>
+                        <span class="lbl">标签&nbsp;&nbsp;-</span>
+                        <span>
+                            {% for tag in post.tags.all %}
+                                <a href="{% url 'blog:in_tag' tag.slug %}" title="" class="">{{ tag.name }}
+                                    {% if not forloop.last %}、{% endif %}</a>
+                            {% empty %}
+                                暂无标签
+                            {% endfor %}
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="">
+                <!-- 多说评论框 start -->
+                <div class="ds-thread" data-thread-key="{{ post.pk }}" data-title="{{ post.title }}"
+                     data-url="{{ post.get_absolute_url }}"></div>
+                <!-- 多说评论框 end -->
+                <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+                <script type="text/javascript">
+                    var duoshuoQuery = {short_name: "zmrenwu"};
+                    (function () {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0]
+                        || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- 多说公共JS代码 end -->
+            </div><!-- /.comments-area -->
+        </div><!-- /.single-blog-details -->
+    </div>
 
-{% block script %}
-    <script>
-        $(function () {
-            var contents;
-            contents = gajus.Contents({
-                articles: $('.post-body').find('h1, h2, h3').get()
-            });
-            $('#toc').append(contents.list());
-        });
-    </script>
-{% endblock script %}
+
+    <!-- single-blog-area end -->
+{% endblock main %}

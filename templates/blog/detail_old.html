@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>{{ post.title }}_{{ post.category }}_追梦人物的博客</title>
+{% endblock title %}
+{% block main %}
+    <main class="col-md-8">
+        {% include 'blog/post_detail.html' %}
+        {% include 'comments/list.html' %}
+    </main>
+{% endblock main %}
+
+{% block script %}
+    <script>
+        $(function () {
+            var contents;
+            contents = gajus.Contents({
+                articles: $('.post-body').find('h1, h2, h3').get()
+            });
+            $('#toc').append(contents.list());
+        });
+    </script>
+{% endblock script %}

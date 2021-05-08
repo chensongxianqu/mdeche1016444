@@ -1,0 +1,145 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="baidu-site-verification" content="BB0a0qDxyr"/>
+    <meta name="robots" content="follow, all"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="探索 Python 世界，分享 django web开发、Python 数据分析、Python 网络爬虫等一切与 Python 相关的知识"/>
+    {% block title %}
+        <title>{{ headline|default:'追梦人物的博客 - 探索 Python、分享 Python' }}</title>
+    {% endblock title %}
+    <link href="{% static 'blog/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{% static 'blog/css/github.css' %}" rel="stylesheet">
+    <link href="{% static 'blog/css/custom.css' %}" rel="stylesheet">
+    {% block link %}
+    {% endblock link %}
+    {% block style %}
+    {% endblock style %}
+</head>
+<body>
+<header>
+    <header class="m-b-2">
+        <nav class="navbar navbar-dark bg-info">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'blog:index' %}" title="博客主页">追梦人物的博客</a>
+                {% comment %}
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:index' %}">主页<span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                {% endcomment %}
+                <form class="form-inline pull-xs-right" action="{% url 'blog:search' %}">
+                    <input class="form-control" type="text" name="q" placeholder="输入关键字搜索">
+                    <button class="btn btn-success" type="submit">搜索</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+</header>
+<section class="m-b-2">
+    <div class="container">
+        <div class="row">
+            {% block main %}
+            {% endblock main %}
+            {% block sidebar %}
+                {% include 'blog/sidebar.html' %}
+            {% endblock sidebar %}
+        </div>
+    </div>
+</section>
+<div id="back-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
+<footer id="footer" class="p-y-2 bg-info">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-3 column">
+                <h4>
+                    博客信息
+                </h4>
+                <ul class="nav">
+                    <li>
+                        基于 django 1.10 和 Python 3.5 开发
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-6 col-md-3 column">
+                <h4>
+                    博客源码地址
+                </h4>
+                <ul class="nav">
+                    <li>
+                        <a href="https://github.com/zmrenwu/django-blog-zm" style="color: white" rel="nofollow">
+                            <i class="fa fa-github" aria-hidden="true"></i> django-blog-zm
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-6 col-md-3 column">
+                <h4>
+                    联系我
+                </h4>
+                <ul class="nav">
+                    <li>
+                        发送邮件到 zmrenwu@163.com
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-6 col-md-3 column">
+                <h4>
+                    友情链接
+                </h4>
+                <ul class="nav">
+                    <li>
+                        <a href="http://yshblog.com/">杨士航的博客</a>
+                    </li>
+                    <li>
+                        <a href="http://codingpy.com/tag/django/">编程派</a>
+                    </li>
+                    <li>
+                        <a href="http://www.jianshu.com/users/f0c09f959299/latest_articles">我的简书主页</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/tether/1.3.7/js/tether.min.js"></script>
+<script src="{% static 'blog/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'blog/js/contents.js' %}"></script>
+<script>
+    $(function () {
+        $('#back-top').on('click', move);
+        $(window).on('scroll', function () {
+            checkPosition($(window).height() / 1.5);
+        });
+        checkPosition($(window).height());
+
+        function move() {
+            if ($(window).scrollTop() != 0) {
+                if (!$('body').is(':animated')) {
+                    $('html,body').animate({
+                        scrollTop: 0
+                    }, 800);
+                }
+            }
+        }
+
+        function checkPosition(pos) {
+            if ($(window).scrollTop() > pos) {
+                $('#back-top').fadeIn();
+            } else {
+                $('#back-top').fadeOut();
+            }
+        }
+    });
+</script>
+{% block script %}
+{% endblock script %}
+</body>
+</html>
