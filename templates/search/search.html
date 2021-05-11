@@ -4,18 +4,114 @@
     <title>{{ query }}_追梦人物的博客搜索结果</title>
 {% endblock title %}
 {% block main %}
-    <main class="col-md-8">
-        {% if query %}
-            {% for obj in object_list %}
-                {% include 'blog/_post_detail.html' with post=obj.object %}
-            {% empty %}
-                <p>没有搜到任何文章，请尝试更换搜索关键字。</p>
-            {% endfor %}
-            {% if object_list %}
-                {% bootstrap_paginate page_obj range=10 show_first_last='true' size='small' %}
-            {% endif %}
-        {% else %}
-            你要搜什么？
+    <div class="col-md-8 col-sm-12">
+        <div class="popular-posts-area">
+            <div class="row">
+                {% if query %}
+                    {% for obj in object_list %}
+                        {% if forloop.counter < 5 %}
+                            <div class="col-md-6 col-sm-6">
+                                <div class="single-popular-post">
+                                    <div class="post-img">
+                                        <a href="{{ obj.object.get_absolute_url }}">
+                                            <img src="
+                                            {% if obj.object.cover %}{{ obj.object.cover.cover_370_230.url }}{% else %}
+                                             {{ obj.object.category.cover.cover_370_230.url }}{% endif %}"
+                                                 alt="Popular Post"/>
+                                        </a>
+                                        <a href="{% url 'blog:in_category' obj.object.category.slug %}"
+                                           class="post-tag">
+                                            {{ obj.object.category }}
+                                        </a>
+                                        <div class="post-info">
+                                            <p>
+                                            <span class="post-date">
+                                                <a href="{{ obj.object.get_absolute_url }}">{{ obj.object.pub_date | date:'Y-m-d' }}</a>
+                                            </span>
+                                                {% get_comment_count for obj.object as comment_count %}
+                                                <span class="post-comments">
+                                                <a href="#">{{ comment_count }} 评论</a>
+                                            </span>
+                                                <span class="post-social-links">
+												<a href="{{ obj.object.get_absolute_url }}">{{ obj.object.views }} 阅读</a>
+                                            </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="post-content">
+                                        <h6 class="post-title">
+                                            <a href="{{ obj.object.get_absolute_url }}">{{ obj.object.title }}</a>
+                                        </h6>
+                                        <div class="post-short-desc">
+                                            {% if obj.object.lead %}
+                                                {{ obj.object.lead_html | truncatechars_html:200 }}
+                                            {% else %}
+                                                {{ obj.object.excerpt_html | truncatechars_html:200 }}
+                                            {% endif %}
+                                        </div>
+                                        <a href="{{ obj.object.get_absolute_url }}"
+                                           class="continue-link">继续阅读...</a>
+                                    </div>
+                                </div><!-- /.single-popular-post -->
+                            </div>
+                            {% if forloop.counter == 4 %}
+                                </div>
+                                </div><!-- /.popular-posts-area -->
+                                <!-- latest-reviews-area start -->
+                                <div id="latest-reviews" class="latest-reviews-area">
+                                <div class="row">
+                            {% endif %}
+                        {% else %}
+                            <div class="col-md-12">
+                                <div class="single-review">
+                                    <div class="post-img">
+                                        <a href="{{ obj.object.get_absolute_url }}">
+                                            <img src="
+                                            {% if obj.object.cover %}{{ obj.object.cover.cover_770_300.url }}{% else %}
+                                             {{ obj.object.category.cover.cover_770_300.url }}{% endif %}"
+                                                 alt="Review Image"/>
+                                        </a>
+                                        <a href="#" class="post-tag">{{ obj.object.category }}</a>
+                                        <div class="post-info">
+                                            <p>
+                                            <span class="post-date">
+                                            <a href="#">{{ obj.object.pub_date | date:'Y-m-d' }}</a>
+                                            </span>
+                                                {% get_comment_count for obj.object as comment_count %}
+                                                <span class="post-comments"><a
+                                                        href="#">{{ comment_count }} 评论</a></span>
+                                                <span class="post-social-links">
+														<a href="{{ obj.object.get_absolute_url }}">{{ obj.object.views }} 阅读</a>
+                                            </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="post-content">
+                                        <h6 class="post-title">
+                                            <a href="{{ obj.object.get_absolute_url }}">{{ obj.object.title }}</a>
+                                        </h6>
+                                        <div class="post-short-desc">
+                                            {% if obj.object.lead %}
+                                                {{ obj.object.lead_html | truncatechars_html:200 }}
+                                            {% else %}
+                                                {{ obj.object.excerpt_html | truncatechars_html:200 }}
+                                            {% endif %}
+                                        </div>
+                                        <a href="{{ obj.object.get_absolute_url }}" class="continue-link">继续阅读...</a>
+                                    </div>
+                                </div><!-- /.single-review -->
+                            </div>
+                        {% endif %}
+                    {% empty %}
+                        <p>没有搜到任何文章，请尝试更换搜索关键字。</p>
+                    {% endfor %}
+                {% else %}
+                    你要搜什么？
+                {% endif %}
+                </div>
+                </div>
+        {% if object_list %}
+            {% bootstrap_paginate page_obj range=10 show_first_last='true' size='small' %}
         {% endif %}
-    </main>
+    </div>
 {% endblock main %}
