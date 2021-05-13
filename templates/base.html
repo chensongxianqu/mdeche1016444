@@ -1,5 +1,4 @@
 {% load staticfiles %}
-{% load blog_tags %}
 <!DOCTYPE html>
 <html class="no-js" lang="zh-cn">
 <head>
@@ -166,80 +165,7 @@
             {% block main %}
             {% endblock main %}
             {% block aside %}
-                <div class="col-md-4 col-md-offset-0 col-sm-8 col-sm-offset-2">
-                    <div class="sidebar-area fix">
-                        <div class="single-sidebar-widget">
-                            <h6 class="widget-title">关于我</h6>
-                            <div class="sidebar-content about-me">
-                                <div class="my-photo">
-                                    <a href="#"><img class="img-circle" src="img/sidebar/me.jpg" alt="My Image"/></a>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consecteturs adipisicing elit, sed do
-                                    eiusmod tempor incididunt labore et dolore aliqua. Ut enim ad minim veniam,</p>
-                            </div><!-- /.sidebar-content -->
-                        </div><!-- /.single-sidebar-widget -->
-                        <div class="single-sidebar-widget">
-                            <h6 class="widget-title">分类</h6>
-                            <div class="sidebar-content">
-                                <div class="categories-list">
-                                    {% get_categories as category_list %}
-                                    <ul>
-                                        {% for category in category_list %}
-                                            <li>
-                                                <a href="{% url 'blog:in_category' category.slug %}">
-                                                    <span class="category">{{ category }}</span>
-                                                    <span class="number">({{ category.post_count }})</span>
-                                                </a>
-                                            </li>
-                                        {% empty %}
-                                            暂无分类
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div><!-- /.sidebar-content -->
-                        </div><!-- /.single-sidebar-widget -->
-                        <div class="single-sidebar-widget">
-                            <h6 class="widget-title">归档</h6>
-                            {% get_archive as archives %}
-                            {% regroup archives by dates.year as archives_by_year %}
-                            <div class="sidebar-content">
-                                <div class="archive-list">
-                                    <ul>
-                                        {% for archive in archives_by_year %}
-                                            <li><a href="{% url 'blog:archive_year' archive.grouper %}">
-                                                <span class="year">{{ archive.grouper }} 年</span></a>
-                                                <ul class="month-list">
-                                                    {% for month in archive.list %}
-                                                        <li>
-                                                            <a href="{% url 'blog:archive_month' archive.grouper month.dates|date:'m' %}">
-                                                                <span class="month">{{ month.dates |date:'n' }} 月</span><span
-                                                                    class="number">({{ month.post_count }})</span></a>
-                                                        </li>
-                                                    {% endfor %}
-                                                </ul>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div><!-- /.sidebar-content -->
-                        </div><!-- /.single-sidebar-widget -->
-                        <div class="single-sidebar-widget">
-                            <h6 class="widget-title">标签云</h6>
-                            <div class="sidebar-content">
-                                <div class="tags-list">
-                                    {% get_tags as tag_list %}
-                                    <ul>
-                                        {% for tag in tag_list %}
-                                            <li><a href="{% url 'blog:in_tag' tag.slug %}">{{ tag }}</a></li>
-                                        {% empty %}
-                                            暂无标签
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div><!-- /.sidebar-content -->
-                        </div><!-- /.single-sidebar-widget -->
-                    </div><!-- /.sidebar-area -->
-                </div>
+                {% include 'blog/sidebar.html' %}
             {% endblock aside %}
         </div>
     </div>
@@ -248,9 +174,6 @@
 
 <!-- footer-area start -->
 <footer id="footer" class="footer-area text-center">
-    <div class="footer-logo">
-        <a href="#"><img src="img/logo/footer-logo.png" alt="Footer Logo"/></a>
-    </div>
     <p class="copyright-text">&copy; Copyright© 2015 Blogging. All right reserved.</p>
 </footer>
 <!-- footer-area end -->

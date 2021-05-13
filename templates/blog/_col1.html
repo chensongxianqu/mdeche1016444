@@ -1,0 +1,38 @@
+{% load comments %}
+
+<div class="col-md-12">
+    <div class="post-img">
+        <a href="{{ post.get_absolute_url }}">
+            <img src="{% if post.cover %}{{ post.cover.cover_770_300.url }}{% else %}
+                                             {{ post.category.cover.cover_770_300.url }}{% endif %}"
+                 alt="Review Image"/>
+        </a>
+        <a href="#" class="post-tag">{{ post.category }}</a>
+        <div class="post-info">
+            <p>
+                                            <span class="post-date">
+                                            <a href="#">{{ post.pub_date | date:'Y-m-d' }}</a>
+                                            </span>
+                {% get_comment_count for post as comment_count %}
+                <span class="post-comments"><a
+                        href="#">{{ comment_count }} 评论</a></span>
+                <span class="post-social-links">
+														<a href="{{ post.get_absolute_url }}">{{ post.views }} 阅读</a>
+                                            </span>
+            </p>
+        </div>
+    </div>
+    <div class="post-content">
+        <h6 class="post-title">
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </h6>
+        <div class="post-short-desc">
+            {% if post.lead %}
+                {{ post.lead_html | truncatechars_html:200 }}
+            {% else %}
+                {{ post.excerpt_html | truncatechars_html:200 }}
+            {% endif %}
+        </div>
+        <a href="{{ post.get_absolute_url }}" class="continue-link">继续阅读...</a>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+{% extends 'blog/index.html' %}
+
+{% load bootstrap_pagination %}
+
+{% block title %}<title>{{ headline }}</title>{% endblock title %}
+{% block post_list %}
+    {% include 'blog/_post_list.html' %}
+{% endblock post_list %}
+{% include 'blog/_pagination.html' %}

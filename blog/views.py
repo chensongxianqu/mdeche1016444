@@ -26,7 +26,7 @@ class PostYearArchiveView(SetHeadlineMixin, YearArchiveView):
     date_field = "pub_date"
     make_object_list = True
     context_object_name = 'post_list'
-    template_name = 'blog/index.html'
+    template_name = 'blog/post_list.html'
     headline = '文章归档_追梦人物的博客'
 
 
@@ -35,7 +35,7 @@ class PostMonthArchiveView(SetHeadlineMixin, MonthArchiveView):
     queryset = Post.objects.all()
     date_field = "pub_date"
     context_object_name = 'post_list'
-    template_name = 'blog/index.html'
+    template_name = 'blog/post_list.html'
     month_format = '%m'
     headline = '文章归档_追梦人物的博客'
 
@@ -55,7 +55,7 @@ class PostDetailView(DateDetailView):
 class InCategoryView(MessageMixin, SetHeadlineMixin, ListView):
     paginate_by = 10
     model = Post
-    template_name = "blog/in_category.html"
+    template_name = "blog/post_list.html"
 
     def get_queryset(self):
         c = get_object_or_404(Category, slug=self.kwargs.get('slug'))
@@ -72,7 +72,7 @@ class InCategoryView(MessageMixin, SetHeadlineMixin, ListView):
 class InTagView(SetHeadlineMixin, MessageMixin, ListView):
     paginate_by = 10
     model = Post
-    template_name = "blog/in_tag.html"
+    template_name = "blog/post_list.html"
 
     def get_queryset(self):
         t = get_object_or_404(Tag, slug=self.kwargs.get('slug'))

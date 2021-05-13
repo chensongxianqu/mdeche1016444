@@ -6,7 +6,7 @@
     <!-- single-blog-area start -->
     <div class="col-md-8 col-sm-12">
         <div class="single-blog-details">
-            <span class="tag">{{ post.category }}</span>
+            <span class="tag"><a href="{% url 'blog:in_category' post.category.slug %}">{{ post.category }}</a></span>
             <h1 class="post-title">{{ post.title }}</h1>
             <p class="post-date">发表于 {{ post.pub_date|date }}</p>
             <div class="post-long-desc">
