@@ -1,5 +1,3 @@
-{% load comments %}
-
 <div class="col-md-6 col-sm-6">
     <div class="post-img">
         <a href="{{ post.get_absolute_url }}">
@@ -19,9 +17,10 @@
                 <span class="post-date">
                     <a href="{{ post.get_absolute_url }}">{{ post.pub_date | date:'Y-m-d' }}</a>
                 </span>
-                {% get_comment_count for post as comment_count %}
                 <span class="post-comments">
-                    <a href="#">{{ comment_count }} 评论</a>
+                    <a href="{{ post.get_absolute_url }}#comment-area" class="ds-thread-count"
+                       data-thread-key="{{ post.pk }}">
+                    </a>
                 </span>
                 <span class="post-social-links">
                     <a href="{{ post.get_absolute_url }}">{{ post.views }} 阅读</a>

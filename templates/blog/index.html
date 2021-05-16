@@ -17,6 +17,8 @@
                 {% endfor %}
             </div>
         {% endblock post_list %}
-        {% include 'blog/_pagination.html' %}
+        {% block pagination %}
+            {% include 'blog/_pagination.html' %}
+        {% endblock pagination %}
     </div>
 {% endblock main %}

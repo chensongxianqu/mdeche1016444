@@ -1,21 +1,21 @@
-{% extends 'base.html' %}
+{% extends 'blog/index.html' %}
 {% load comments bootstrap_pagination %}
 {% block title %}
     <title>{{ query }}_追梦人物的博客搜索结果</title>
 {% endblock title %}
-{% block main %}
-    <div class="col-md-8 col-sm-12">
-        <div class="popular-posts-area">
-            <div class="row">
-                {% if query %}
-                    {% for obj in object_list %}
-                        {% include 'blog/_post_list.html' with post=obj.object %}
-                    {% empty %}
-                        <p>没有搜到任何文章，请尝试更换搜索关键字。</p>
-                    {% endfor %}
-                {% else %}
-                    你要搜什么？
-                {% endif %}
-                {% include 'blog/_pagination.html' with post_list=object_list %}
-            </div>
-{% endblock main %}
+{% block post_list %}
+    <div class="row">
+        {% if query %}
+            {% for obj in object_list %}
+                {% include 'blog/_col1.html' with post=obj.object %}
+            {% empty %}
+                <p>没有搜到任何文章，请尝试更换搜索关键字。</p>
+            {% endfor %}
+        {% else %}
+            你要搜什么？
+        {% endif %}
+    </div>
+{% endblock post_list %}
+{% block pagination %}
+    {% include 'blog/_pagination.html' with post_list=object_list %}
+{% endblock pagination %}
